@@ -31,12 +31,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// TEST: print the ASCII-art for the character 'A'
-	art := font['A']
+	// Print the full word in ASCII-art
+	printWordAsAscii(input, font)
 
-	for _, line := range art {
-		fmt.Println(line)
-	}
 }
 
 // loadFont reads the banner file and builds a map:
@@ -72,4 +69,29 @@ func loadFont(path string) (map[byte][]string, error) {
 	}
 
 	return font, nil
+}
+
+// printWordAsAscii prints one word as ASCII-art using the given font.
+func printWordAsAscii(word string, font map[byte][]string) {
+	// for each row (0 to 7)
+	for row := 0; row < charHeight; row++ {
+
+		line := ""
+
+		// for each character in the input word
+		for i := 0; i < len(word); i++ {
+			ch := word[i]
+
+			// ignore characters outside the banner range
+			if ch < firstChar || ch > lastChar {
+				continue
+			}
+
+			art := font[ch] // 8-line ASCII art block for this character
+
+			line += art[row]
+		}
+
+		fmt.Println(line)
+	}
 }
