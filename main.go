@@ -31,8 +31,23 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Print the full word in ASCII-art
-	printWordAsAscii(input, font)
+	// Convert literal "\n" into real newline
+	input = strings.ReplaceAll(input, `\n`, "\n")
+
+	// Split the input into lines
+	lines := strings.Split(input, "\n")
+
+	// For each line
+	for _, line := range lines {
+		// If line is empty → print blank ASCII block
+		if line == "" {
+			printEmptyBlock()
+			continue
+		}
+
+		// Otherwise print the line as ASCII-art
+		printWordAsAscii(line, font)
+	}
 
 }
 
@@ -93,5 +108,12 @@ func printWordAsAscii(word string, font map[byte][]string) {
 		}
 
 		fmt.Println(line)
+	}
+}
+
+// printEmptyBlock prints an empty ASCII-art line (8 empty lines)
+func printEmptyBlock() {
+	for i := 0; i < charHeight; i++ {
+		fmt.Println()
 	}
 }
