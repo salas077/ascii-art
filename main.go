@@ -14,30 +14,49 @@ const (
 )
 
 func main() {
-	// Check if we have at least one argument
+	// 1. Check if we have at least one argument (the text)
 	if len(os.Args) < 2 {
 		return
 	}
 
-	// Read the input (we won't use it yet, we just test 'A')
+	// 2. Read the input text
 	input := os.Args[1]
 	if input == "" {
 		return
 	}
 
-	// Load the font from the banner file
-	font, err := loadFont("standard.txt")
+	// 3. Choose which banner file to use
+	bannerFile := "standard.txt" // default banner
+
+	// If there is a second argument, use it as banner name
+	if len(os.Args) >= 3 {
+		bannerName := os.Args[2]
+
+		switch bannerName {
+		case "standard":
+			bannerFile = "standard.txt"
+		case "shadow":
+			bannerFile = "shadow.txt"
+		case "thinkertoy":
+			bannerFile = "thinkertoy.txt"
+		default:
+			fmt.Println("Unknown banner, using standard.")
+		}
+	}
+
+	// 4. Load the font from the selected banner file
+	font, err := loadFont(bannerFile)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Convert literal "\n" into real newline
+	// 5. Convert literal "\n" into real newline
 	input = strings.ReplaceAll(input, `\n`, "\n")
 
-	// Split the input into lines
+	// 6. Split the input into lines
 	lines := strings.Split(input, "\n")
 
-	// For each line
+	// 7. For each line
 	for _, line := range lines {
 		// If line is empty → print blank ASCII block
 		if line == "" {
@@ -48,7 +67,6 @@ func main() {
 		// Otherwise print the line as ASCII-art
 		printWordAsAscii(line, font)
 	}
-
 }
 
 // loadFont reads the banner file and builds a map:
