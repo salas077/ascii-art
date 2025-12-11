@@ -26,7 +26,7 @@ func main() {
 	}
 
 	// 3. Choose which banner file to use
-	bannerFile := "standard.txt" // default banner
+	bannerFile := "banners/standard.txt" // default banner
 
 	// If there is a second argument, use it as banner name
 	if len(os.Args) >= 3 {
@@ -34,11 +34,11 @@ func main() {
 
 		switch bannerName {
 		case "standard":
-			bannerFile = "standard.txt"
+			bannerFile = "banners/standard.txt"
 		case "shadow":
-			bannerFile = "shadow.txt"
+			bannerFile = "banners/shadow.txt"
 		case "thinkertoy":
-			bannerFile = "thinkertoy.txt"
+			bannerFile = "banners/thinkertoy.txt"
 		default:
 			fmt.Println("Unknown banner, using standard.")
 		}

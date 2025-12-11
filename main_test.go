@@ -6,7 +6,7 @@ import (
 
 func TestLoadFontStandard(t *testing.T) {
 	// Call loadFont with the standard banner file
-	font, err := loadFont("standard.txt")
+	font, err := loadFont("banners/standard.txt")
 	if err != nil {
 		t.Fatalf("loadFont returned an error: %v", err)
 	}
