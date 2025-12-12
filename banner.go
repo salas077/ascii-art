@@ -6,50 +6,45 @@ import (
 	"strings"
 )
 
-// Banner maps a rune to its ASCII-art glyph representation.
-// Each glyph consists of charHeight number of lines.
+// Banner is a map that holds ASCII art for each character
+// each character maps to a slice of 8 strings (the art lines)
 type Banner map[rune][]string
 
 const (
-	firstChar  = 32  // ASCII code for ' '
-	lastChar   = 126 // ASCII code for '~'
-	charHeight = 8   // Number of lines per character in the banner file
+	firstChar  = 32  // space character (first printable ASCII)
+	lastChar   = 126 // ~ character (last printable ASCII)
+	charHeight = 8   // each character is 8 lines tall
 )
 
-// LoadBanner reads a banner font file (standard/shadow/thinkertoy)
-// and loads its glyphs into a Banner map.
-//
-// The expected structure of the banner file is:
-//   - For every printable ASCII character (32–126):
-//     1 empty/unused line
-//     followed by 8 lines representing the character's ASCII-art glyph.
-//   - Therefore, each character occupies 9 lines in total.
-//
-// This function sequentially extracts each 9-line block and stores
-// the 8 glyph lines in the Banner map.
+// LoadBanner reads a banner file and loads all the character art
+// banner files have each character as 9 lines (1 empty + 8 art)
 func LoadBanner(path string) (Banner, error) {
+	// read the whole file
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
 
-	// Split file into individual lines
+	// split file into lines
 	lines := strings.Split(string(data), "\n")
 
+	// create the banner map
 	banner := make(Banner)
 
-	const blockSize = charHeight + 1 // Total lines per char block (1 empty + 8 glyph lines)
+	const blockSize = charHeight + 1 // each char = 9 lines total
 
+	// go through each ASCII character from space to ~
 	for code := firstChar; code <= lastChar; code++ {
+		// figure out where this character starts in the file
 		blockIndex := int(code - firstChar)
 		start := blockIndex * blockSize
 
-		// Ensure there are enough lines remaining for the glyph
+		// make sure we have enough lines in the file
 		if start+1+charHeight > len(lines) {
 			return nil, fmt.Errorf("invalid banner file: not enough lines for char %q", rune(code))
 		}
 
-		// Skip the first line in the block (empty line), then take the next 8 glyph lines
+		// skip the first empty line, take the next 8 lines
 		glyphLines := lines[start+1 : start+1+charHeight]
 		banner[rune(code)] = glyphLines
 	}
