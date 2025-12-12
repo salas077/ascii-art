@@ -8,7 +8,8 @@ import (
 // validateInput checks if all characters in the input are supported
 // (within the ASCII range 32-126, plus newlines are allowed)
 func validateInput(input string) error {
-	var unsupported []rune
+	// Pre-allocate slice for better performance
+	unsupported := make([]rune, 0, len(input))
 
 	for _, r := range input {
 		if r == '\n' {
@@ -25,7 +26,7 @@ func validateInput(input string) error {
 	}
 
 	// Build readable list: 'Γ', 'ε', '🙂'
-	var out []string
+	out := make([]string, 0, len(unsupported))
 	for _, r := range unsupported {
 		out = append(out, fmt.Sprintf("%q", r))
 	}

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -9,14 +10,16 @@ import (
 func fakeBanner() Banner {
 	b := make(Banner)
 
-	b['A'] = []string{
-		"A0", "A1", "A2", "A3", "A4", "A5", "A6", "A7",
-	}
-	b['B'] = []string{
-		"B0", "B1", "B2", "B3", "B4", "B5", "B6", "B7",
-	}
-	b[' '] = []string{
-		" 0", " 1", " 2", " 3", " 4", " 5", " 6", " 7",
+	// Use charHeight constant for consistency
+	for i := 0; i < charHeight; i++ {
+		if i == 0 {
+			b['A'] = make([]string, charHeight)
+			b['B'] = make([]string, charHeight)
+			b[' '] = make([]string, charHeight)
+		}
+		b['A'][i] = fmt.Sprintf("A%d", i)
+		b['B'][i] = fmt.Sprintf("B%d", i)
+		b[' '][i] = fmt.Sprintf(" %d", i)
 	}
 
 	return b

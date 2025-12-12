@@ -10,6 +10,7 @@ func main() {
 	//  - 1 arg  -> message, banner = standard
 	//  - 2 args -> message, banner = standard/shadow/thinkertoy
 	if len(os.Args) < 2 || len(os.Args) > 3 {
+		fmt.Println("Usage: go run . \"text\" [banner]")
 		return
 	}
 
@@ -30,7 +31,8 @@ func main() {
 	case "thinkertoy":
 		bannerPath = "banners/thinkertoy.txt"
 	default:
-		// If an unknown banner name is provided, do nothing and exit.
+		// If an unknown banner name is provided, show error and exit.
+		fmt.Println("Error: Invalid banner name. Available options: standard, shadow, thinkertoy")
 		return
 	}
 
