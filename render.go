@@ -11,14 +11,17 @@ func RenderLine(s string, b Banner) string {
 
 	var builder strings.Builder
 
+	// Create empty glyph once for unknown characters
+	empty := make([]string, height)
+
 	for row := 0; row < height; row++ {
 		for _, ch := range s {
 			glyph, ok := b[ch]
-			if ok {
-				// Only write if character exists in banner
-				builder.WriteString(glyph[row])
+			if !ok {
+				// If character not found, use empty glyph
+				glyph = empty
 			}
-			// If character not found, skip it (don't add anything)
+			builder.WriteString(glyph[row])
 		}
 		builder.WriteRune('\n')
 	}

@@ -28,13 +28,13 @@ Mixed content (letters, numbers, symbols):
 --- Error Handling ---
 
 Invalid characters (non-ASCII):
-    go run . "Γεια"  # Error: unsupported characters: 'Γ', 'ε', 'ι', 'α'
+    go run . "Γεια"  # Unknown characters are rendered as empty spaces
 
 Wrong number of arguments:
-    go run .  # Usage: go run . "text" [banner]
+    go run .  # Program exits silently
 
 Invalid banner name:
-    go run . "Hello" invalid  # Error: Invalid banner name. Available options: standard, shadow, thinkertoy
+    go run . "Hello" invalid  # Program exits silently
 
 --- Code Organization ---
 
@@ -50,7 +50,7 @@ The project follows a clean modular structure:
 
 • Three distinct banner styles (standard, shadow, thinkertoy)
 • Proper newline and empty line handling
-• Input validation for ASCII characters (32-126)
+• Handles unknown characters by rendering them as empty spaces
 • Clean, maintainable code architecture
 • Robust error handling for edge cases
 • Optimized string building for performance
@@ -62,8 +62,8 @@ is represented as an 8-line art block. Each character block is separated by one 
 making each character occupy exactly 9 lines in the file.
 
 The rendering process builds output line by line, concatenating the appropriate row from 
-each character's art block. Input validation prevents crashes from unsupported characters 
-while providing helpful error messages.
+each character's art block. Unknown characters are gracefully handled by rendering them as empty spaces, 
+ensuring the program never crashes on unexpected input.
 
 --- Testing ---
 
