@@ -25,6 +25,17 @@ Multiple lines with newlines:
 Mixed content (letters, numbers, symbols):
     go run . "Hello123!"
 
+--- Error Handling ---
+
+Invalid characters (non-ASCII):
+    go run . "Γεια"  # Error: unsupported characters: 'Γ', 'ε', 'ι', 'α'
+
+Wrong number of arguments:
+    go run .  # Usage: go run . "text" [banner]
+
+Invalid banner name:
+    go run . "Hello" invalid  # Error: Invalid banner name. Available options: standard, shadow, thinkertoy
+
 --- Code Organization ---
 
 The project follows a clean modular structure:
