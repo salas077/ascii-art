@@ -43,7 +43,6 @@ The project follows a clean modular structure:
     main.go       -> Program entry point and command line handling
     banner.go     -> Banner file loading and character mapping
     render.go     -> ASCII art rendering and text processing
-    validation.go -> Input validation and error handling
     main_test.go  -> Complete test coverage
 
 --- Key Features ---
@@ -70,5 +69,13 @@ ensuring the program never crashes on unexpected input.
 Run the complete test suite:
     go test
 
-Tests include banner loading, rendering functions, input validation, and various edge 
+Tests include banner loading, rendering functions, and various edge 
 cases to ensure the program works reliably in all scenarios.
+
+--- Authors ---
+
+Developed by:
+• Giorgos Salaounis
+• Christos Paloglou
+
+Zone01 Programming Project - ASCII Art Generator
