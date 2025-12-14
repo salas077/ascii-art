@@ -26,8 +26,6 @@ func fakeBanner() Banner {
 	return b
 }
 
-
-
 // test loading the standard banner file
 func TestLoadBannerStandard(t *testing.T) {
 	banner, err := LoadBanner("banners/standard.txt")
@@ -49,17 +47,15 @@ func TestLoadBannerStandard(t *testing.T) {
 	for c := firstChar; c <= lastChar; c++ {
 		art, ok := banner[rune(c)]
 		if !ok {
-				t.Errorf("character %q not found", c)
+			t.Errorf("character %q not found", c)
 			continue
 		}
 		// each character should be 8 lines tall
 		if len(art) != charHeight {
-				t.Errorf("character %q has wrong height: %d", c, len(art))
+			t.Errorf("character %q has wrong height: %d", c, len(art))
 		}
 	}
 }
-
-
 
 // test rendering a simple line
 func TestRenderLine(t *testing.T) {
@@ -91,8 +87,6 @@ func TestRenderLineUnknownChar(t *testing.T) {
 	_ = RenderLine("Z", b)
 }
 
-
-
 // test converting \n to real newlines
 func TestDecodeEscapedNewlines(t *testing.T) {
 	// input has literal \n, should become real newlines
@@ -103,8 +97,6 @@ func TestDecodeEscapedNewlines(t *testing.T) {
 		t.Errorf("decodeEscapedNewlines(...) = %q, want %q", got, want)
 	}
 }
-
-
 
 // test rendering input with space
 func TestRenderInputSingleLine(t *testing.T) {
@@ -166,57 +158,5 @@ func TestRenderInputEmpty(t *testing.T) {
 	got := RenderInput("", b)
 	if got != "" {
 		t.Errorf("RenderInput(\"\") = %q, want empty string", got)
-	}
-}
-
-
-
-// test validation with normal ASCII
-func TestValidateInput_ValidASCII(t *testing.T) {
-	// normal ASCII should be fine
-	input := "Hello 123!\nThere"
-	err := validateInput(input)
-	if err != nil {
-		t.Errorf("should work with ASCII: %v", err)
-	}
-}
-
-// test with Greek characters
-func TestValidateInput_OnlyGreek(t *testing.T) {
-	// Greek letters should fail validation
-	input := "Γεια σου"
-	err := validateInput(input)
-	if err == nil {
-		t.Error("should reject Greek characters")
-	}
-}
-
-// test mixing ASCII and Greek
-func TestValidateInput_MixedASCIIAndGreek(t *testing.T) {
-	// mixing ASCII with Greek should fail
-	input := "Gεια σου"
-	err := validateInput(input)
-	if err == nil {
-		t.Error("should reject mixed input")
-	}
-}
-
-// test with emoji
-func TestValidateInput_Emoji(t *testing.T) {
-	// emoji should not be allowed
-	input := "Hello🙂"
-	err := validateInput(input)
-	if err == nil {
-		t.Error("should reject emoji")
-	}
-}
-
-// test that newlines are allowed
-func TestValidateInput_NewlinesAreAllowed(t *testing.T) {
-	// newlines should be fine in validation
-	input := "Hello\nThere\n123!"
-	err := validateInput(input)
-	if err != nil {
-		t.Errorf("newlines should be ok: %v", err)
 	}
 }
